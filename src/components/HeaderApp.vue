@@ -16,7 +16,7 @@
       <v-btn text>Finalizar Dia</v-btn>
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn depressed elevation="0" color="#fff" v-bind="attrs" v-on="on">
+          <v-btn text v-bind="attrs" v-on="on">
             Salvar & Carregar
           </v-btn>
         </template>
@@ -29,12 +29,21 @@
           </v-list-item>
         </v-list>
       </v-menu>
+      <v-layout align-center>
+        <span class="text-uppercase grey--text text--darken-2">
+          Saldo: {{ funds | currency }}
+        </span>
+      </v-layout>
     </v-toolbar-items>
   </v-app-bar>
 </template>
 <script>
 export default {
-
+  computed: {
+    funds() {
+      return this.$store.getters.funds
+    }
+  }
 }
 </script>
 <style></style>

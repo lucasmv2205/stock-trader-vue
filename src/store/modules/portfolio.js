@@ -20,10 +20,11 @@ export default {
       const record = state.stocks.find(element => element.id === stockId)
       if (record.quantity > quantity) {
         record.quantity -= quantity
+        state.funds += stockPrice * quantity
       } else {
         state.stocks.splice(state.stocks.indexOf(record), 1)
+        state.funds += stockPrice * record.quantity
       }
-      state.funds += stockPrice * quantity
     }
   },
   actions: {
