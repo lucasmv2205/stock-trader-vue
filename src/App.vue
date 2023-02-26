@@ -3,19 +3,52 @@
     <v-main>
       <HeaderApp />
       <v-container>
-        <router-view />
+        <Transition name="slide" mode="out-in">
+          <router-view />
+        </Transition>
       </v-container>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HeaderApp from './components/HeaderApp.vue'
+import HeaderApp from "./components/HeaderApp.vue";
 export default {
   components: { HeaderApp },
-  name: 'App',
+  name: "App",
   created() {
-    this.$store.dispatch('initStocks')
-  }
+    this.$store.dispatch("initStocks");
+  },
 };
 </script>
+
+<style>
+@keyframes slide-in {
+  from {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+@keyframes slide-out {
+  from {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+}
+
+.slide-enter-active {
+  animation: slide-in 0.3s ease;
+}
+
+.slide-leave-active {
+  animation: slide-out 0.3s ease;
+}
+</style>

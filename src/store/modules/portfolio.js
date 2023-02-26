@@ -1,51 +1,57 @@
 export default {
   state: {
     funds: 10000,
-    stocks: []
+    stocks: [],
   },
   mutations: {
     buyStock(state, { stockId, quantity, stockPrice }) {
-      const record = state.stocks.find(element => element.id === stockId)
+      const record = state.stocks.find((element) => element.id === stockId);
       if (record) {
-        record.quantity += quantity
+        record.quantity += quantity;
       } else {
         state.stocks.push({
           id: stockId,
-          quantity
-        })
+          quantity,
+        });
       }
-      state.funds -= stockPrice * quantity
+      state.funds -= stockPrice * quantity;
     },
     sellStock(state, { stockId, quantity, stockPrice }) {
-      const record = state.stocks.find(element => element.id === stockId)
+      const record = state.stocks.find((element) => element.id === stockId);
       if (record.quantity > quantity) {
-        record.quantity -= quantity
-        state.funds += stockPrice * quantity
+        record.quantity -= quantity;
+        state.funds += stockPrice * quantity;
       } else {
-        state.stocks.splice(state.stocks.indexOf(record), 1)
-        state.funds += stockPrice * record.quantity
+        state.stocks.splice(state.stocks.indexOf(record), 1);
+        state.funds += stockPrice * record.quantity;
       }
-    }
+    },
+    setPortfolio(state, portfolio) {
+      state.funds = portfolio.funds;
+      state.stocks = portfolio.stockPortfolio ? portfolio.stockPortfolio : [];
+    },
   },
   actions: {
     sellStock({ commit }, order) {
-      commit('sellStock', order)
-    }
+      commit("sellStock", order);
+    },
   },
   getters: {
     stockPortfolio(state, getters) {
-      return state.stocks.map(stock => {
-        const record = getters.stocks.find(element => element.id === stock.id)
+      return state.stocks.map((stock) => {
+        const record = getters.stocks.find(
+          (element) => element.id === stock.id
+        );
         return {
           id: stock.id,
           quantity: stock.quantity,
           name: record.name,
-          price: record.price
-        }
-      })
+          price: record.price,
+        };
+      });
     },
     funds(state) {
-      return state.funds
-    }
-  }
-}
+      return state.funds;
+    },
+  },
+};
